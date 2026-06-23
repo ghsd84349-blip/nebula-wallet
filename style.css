@@ -1,92 +1,978 @@
+/* КИБЕРПАНК ПРЕМИУМ-ПАКЕТ СТИЛЕЙ ДЛЯ NEBULA SPACE WALLET */
 :root {
-    --bg-color: #08080C;
-    --card-color: #12121A;
-    --accent-color: #00FFCC;
-    --accent-glow: rgba(0, 255, 204, 0.3);
-    --text-color: #FFFFFF;
-    --muted-color: #6C6C80;
-    --border-color: #1F1F2E;
+    --space-void: #030306;
+    --nebula-deep: #090911;
+    --nebula-card: #11111E;
+    --nebula-card-hover: #17172A;
+    --neon-cyan: #00FFCC;
+    --neon-cyan-glow: rgba(0, 255, 204, 0.3);
+    --neon-rose: #FF2E93;
+    --neon-rose-glow: rgba(255, 46, 147, 0.25);
+    --neon-amber: #FFB300;
+    --text-pure: #FFFFFF;
+    --text-slate: #767693;
+    --text-dark-dim: #44445C;
+    --border-grid: #1D1D2F;
+    --border-grid-focus: #2E2E4A;
+    --ui-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* ОБНУЛЕНИЕ И СТАНДАРТИЗАЦИЯ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    padding: 20px;
+    background-color: var(--space-void);
+    color: var(--text-pure);
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
-.app-container {
+/* ОСНОВНОЙ КОНТЕЙНЕР ПРИЛОЖЕНИЯ (МАСШТАБИРУЕМЫЙ МОБИЛЬНЫЙ ФРЕЙМ) */
+.nebula-app-frame {
     width: 100%;
-    max-width: 480px;
+    max-width: 460px;
+    height: 100vh;
+    min-height: 680px;
+    background-color: var(--nebula-deep);
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    position: relative;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.85);
+    overflow: hidden;
 }
 
-/* Панель навигации */
-.top-bar { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; }
-.profile { display: flex; align-items: center; gap: 12px; }
-.avatar { font-size: 22px; background: #1A1A26; padding: 8px; border-radius: 50%; border: 1px solid var(--border-color); }
-.profile-text { display: flex; flex-direction: column; }
-.wallet-label { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
-.wallet-id { color: var(--muted-color); font-size: 12px; }
-.install-pc-btn { background: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 8px 14px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 12px; transition: all 0.2s; }
-.install-pc-btn:hover { background: var(--accent-color); color: #000; box-shadow: 0 0 15px var(--accent-glow); }
+@media (min-width: 480px) {
+    .nebula-app-frame {
+        height: 880px;
+        border-radius: 36px;
+        border: 1px solid var(--border-grid);
+    }
+}
 
-/* Главный баланс */
-.balance-card { background: linear-gradient(135deg, #12121A 0%, #08080F 100%); border: 1px solid var(--border-color); border-radius: 28px; padding: 32px; text-align: center; box-shadow: 0 12px 40px rgba(0,0,0,0.6); }
-.balance-title { color: var(--muted-color); font-size: 14px; margin-bottom: 6px; font-weight: 500; letter-spacing: 0.5px; }
-#total-balance { font-size: 42px; font-weight: 800; color: var(--accent-color); text-shadow: 0 0 25px var(--accent-glow); margin-bottom: 8px; }
-.balance-badge { display: inline-block; background: rgba(0, 255, 204, 0.08); padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(0, 255, 204, 0.2); }
-.badge-trend { color: var(--accent-color); font-size: 12px; font-weight: 600; }
+/* ВЕРХНЯЯ СИСТЕМНАЯ ШАПКА */
+.nebula-core-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-grid);
+    background: linear-gradient(to bottom, rgba(9,9,17,1) 0%, rgba(9,9,17,0.8) 100%);
+    z-index: 10;
+}
 
-/* Сетка функций */
-.action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.action-card { background: var(--card-color); border: 1px solid var(--border-color); border-radius: 20px; padding: 16px 4px; display: flex; flex-direction: column; align-items: center; gap: 8px; color: white; cursor: pointer; transition: all 0.2s ease; }
-.action-card:hover { border-color: var(--accent-color); transform: translateY(-2px); background: #161622; }
-.action-icon { font-size: 22px; }
-.action-text { font-size: 11px; font-weight: 600; color: #C5C5D6; }
+.nebula-profile-identity {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-/* Поле поиска */
-.search-wrapper { background: var(--card-color); border: 1px solid var(--border-color); border-radius: 20px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
-.search-icon { color: var(--muted-color); font-size: 16px; }
-#coin-search { background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 14px; }
-#coin-search::placeholder { color: var(--muted-color); }
+.nebula-avatar-glow {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    background: var(--nebula-card);
+    border: 1px solid var(--border-grid);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-/* Активы */
-.section-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #E1E1E6; letter-spacing: 0.3px; }
-.assets-list { display: flex; flex-direction: column; gap: 12px; }
-.asset-row { background: var(--card-color); border: 1px solid var(--border-color); border-radius: 20px; padding: 18px; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
-.asset-row:hover { border-color: var(--accent-color); }
-.asset-main { display: flex; align-items: center; gap: 14px; }
-.asset-logo { font-size: 20px; background: #1A1A26; width: 44px; height: 44px; display: flex; justify-content: center; align-items: center; border-radius: 50%; border: 1px solid var(--border-color); }
-.asset-details { display: flex; flex-direction: column; gap: 2px; }
-.asset-name { font-weight: 700; font-size: 15px; }
-.asset-code { color: var(--muted-color); font-size: 12px; font-weight: 500; }
-.asset-vals { display: flex; flex-direction: column; text-align: right; gap: 2px; }
-.asset-bal { font-weight: 700; font-size: 15px; }
-.asset-fiat { color: var(--muted-color); font-size: 12px; }
+.nebula-avatar-icon {
+    font-size: 20px;
+    z-index: 2;
+}
 
-/* Модальное окно P2P */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4, 4, 6, 0.85); backdrop-filter: blur(6px); display: flex; justify-content: center; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; }
-.modal-overlay.active { opacity: 1; pointer-events: all; }
-.modal-window { background: #0B0B11; width: 100%; max-width: 480px; border-radius: 28px 28px 0 0; border-top: 1px solid var(--border-color); padding: 26px; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.1, 0.76, 0.55, 0.94); }
-.modal-overlay.active .modal-window { transform: translateY(0); }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
-.close-modal-btn { background: none; border: none; color: white; font-size: 22px; cursor: pointer; opacity: 0.6; transition: 0.2s; }
-.close-modal-btn:hover { opacity: 1; }
-.modal-tabs { display: flex; gap: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 18px; }
-.tab { color: var(--muted-color); font-weight: 700; cursor: pointer; font-size: 15px; transition: 0.2s; }
-.tab.active { color: var(--accent-color); position: relative; }
-.tab.active::after { content: ''; position: absolute; bottom: -13px; left: 0; width: 100%; height: 2px; background: var(--accent-color); }
-.p2p-orders { display: flex; flex-direction: column; gap: 14px; }
-.p2p-order-item { background: var(--card-color); border: 1px solid var(--border-color); padding: 16px; border-radius: 18px; position: relative; }
-.order-user { font-size: 14px; font-weight: 700; color: #E1E1E6; margin-bottom: 4px; }
-.order-limits { font-size: 12px; color: var(--muted-color); }
-.order-price { font-size: 18px; font-weight: 800; color: var(--accent-color); margin-top: 8px; }
-.order-buy-btn { position: absolute; right: 16px; bottom: 16px; background: var(--accent-color); border: none; padding: 8px 16px; border-radius: 10px; font-weight: 700; font-size: 12px; cursor: pointer; transition: 0.2s; }
-.order-buy-btn:hover { box-shadow: 0 0 10px var(--accent-glow); transform: scale(1.03); }
+.nebula-pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--neon-cyan);
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: nebulaPulse 2.5s infinite linear;
+}
+
+@keyframes nebulaPulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.4); opacity: 0; }
+}
+
+.nebula-identity-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nebula-user-rank {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nebula-wallet-hash-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#wallet-address-field {
+    color: var(--text-slate);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.nebula-copy-btn {
+    background: none;
+    border: none;
+    color: var(--text-slate);
+    cursor: pointer;
+    font-size: 12px;
+    transition: var(--ui-transition);
+}
+
+.nebula-copy-btn:hover {
+    color: var(--text-pure);
+    transform: scale(1.15);
+}
+
+.nebula-system-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.nebula-hardware-btn {
+    background: transparent;
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: var(--ui-transition);
+    display: none;
+}
+
+.nebula-hardware-btn:hover {
+    background: var(--neon-cyan);
+    color: var(--space-void);
+    box-shadow: 0 0 12px var(--neon-cyan-glow);
+}
+
+.nebula-network-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 255, 204, 0.05);
+    padding: 3px 8px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 255, 204, 0.15);
+}
+
+.nebula-status-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--neon-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--neon-cyan);
+}
+
+.nebula-status-text {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--neon-cyan);
+}
+
+/* ГЛАВНЫЙ ИНФОРМАЦИОННЫЙ ДАШБОРД БАЛАНСА */
+.nebula-balance-viewport {
+    position: relative;
+    margin: 20px;
+    padding: 30px 24px;
+    background: linear-gradient(135deg, #111122 0%, #08080F 100%);
+    border: 1px solid var(--border-grid);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.nebula-card-mesh-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(var(--border-grid) 1px, transparent 0);
+    background-size: 12px 12px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.nebula-viewport-caption {
+    font-size: 13px;
+    color: var(--text-slate);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.nebula-crypto-massive-display {
+    font-size: 46px;
+    font-weight: 900;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 25px var(--neon-cyan-glow);
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+}
+
+.nebula-analytics-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.nebula-analytics-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(118, 118, 147, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(118, 118, 147, 0.15);
+}
+
+.nebula-trend-arrow {
+    font-size: 12px;
+    color: var(--text-slate);
+}
+
+.nebula-trend-percentage {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-slate);
+}
+
+.nebula-currency-selector {
+    display: flex;
+    background: var(--space-void);
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid var(--border-grid);
+}
+
+.nebula-currency-tab {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-slate);
+    padding: 4px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--ui-transition);
+}
+
+.nebula-currency-tab.active {
+    background: var(--nebula-card);
+    color: var(--neon-cyan);
+    border: 1px solid var(--border-grid);
+}
+
+/* МАТРИЦА ФУНКЦИОНАЛЬНЫХ КНОПОК */
+.nebula-actions-matrix {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 0 20px 20px 20px;
+}
+
+.nebula-matrix-tile {
+    background: var(--nebula-card);
+    border: 1px solid var(--border-grid);
+    border-radius: 20px;
+    padding: 16px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-pure);
+    cursor: pointer;
+    transition: var(--ui-transition);
+}
+
+.nebula-matrix-tile:hover {
+    background: var(--nebula-card-hover);
+    border-color: var(--border-grid-focus);
+    transform: translateY(-2px);
+}
+
+.nebula-matrix-tile.interactive-glow {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 255, 204, 0.02);
+}
+
+.nebula-matrix-tile.interactive-glow:hover {
+    background: rgba(0, 255, 204, 0.06);
+    box-shadow: 0 5px 15px rgba(0,255,204,0.1);
+}
+
+.nebula-tile-graphic {
+    font-size: 22px;
+}
+
+.nebula-tile-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #CECEDC;
+}
+
+/* ОСНОВНОЙ ДИНАМИЧЕСКИЙ ФРЕЙМ КОНТЕНТА */
+.nebula-main-content-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px 100px 20px;
+}
+
+.nebula-main-content-area::-webkit-scrollbar {
+    width: 4px;
+}
+.nebula-main-content-area::-webkit-scrollbar-thumb {
+    background: var(--border-grid);
+    border-radius: 10px;
+}
+
+/* ПОВЕДЕНИЕ СТРАНИЦ-ВКЛАДОК */
+.nebula-tab-page {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    animation: nebulaFadeIn 0.3s ease;
+}
+
+.nebula-tab-page.active {
+    display: flex;
+}
+
+@keyframes nebulaFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ПОИСКОВАЯ ИНФРАСТРУКТУРА */
+.nebula-search-system-box {
+    width: 100%;
+}
+
+.nebula-search-input-wrapper {
+    background: var(--nebula-card);
+    border: 1px solid var(--border-grid);
+    border-radius: 18px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: var(--ui-transition);
+}
+
+.nebula-search-input-wrapper:focus-within {
+    border-color: var(--neon-cyan);
+    background: var(--space-void);
+    box-shadow: 0 0 12px rgba(0,255,204,0.06);
+}
+
+.nebula-search-icon-decorator {
+    color: var(--text-slate);
+    font-size: 16px;
+}
+
+#nebula-crypto-live-search {
+    background: transparent;
+    border: none;
+    color: var(--text-pure);
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#nebula-crypto-live-search::placeholder {
+    color: var(--text-slate);
+}
+
+.nebula-search-clear-btn {
+    background: none;
+    border: none;
+    color: var(--text-slate);
+    font-size: 14px;
+    cursor: pointer;
+    display: none;
+}
+
+.nebula-search-clear-btn:hover {
+    color: var(--text-pure);
+}
+
+/* ЗАГОЛОВКИ И СПИСКИ РАЗДЕЛОВ */
+.nebula-list-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 2px 0 2px;
+}
+
+.nebula-list-section-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #E2E2EC;
+    letter-spacing: 0.3px;
+}
+
+.nebula-counter-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    background: rgba(0, 255, 204, 0.05);
+    padding: 3px 9px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 204, 0.15);
+}
+
+.nebula-ledger-scroll-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* СТРУКТУРНАЯ СТРОКА СЕТКИ МОНЕТ */
+.nebula-ledger-row {
+    background: var(--nebula-card);
+    border: 1px solid var(--border-grid);
+    border-radius: 22px;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--ui-transition);
+    cursor: pointer;
+}
+
+.nebula-ledger-row:hover {
+    border-color: var(--border-grid-focus);
+    background: var(--nebula-card-hover);
+    transform: scale(1.01);
+}
+
+.nebula-row-left-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.nebula-glyph-avatar {
+    font-size: 18px;
+    font-weight: 800;
+    background: var(--space-void);
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--border-grid);
+    color: var(--neon-cyan);
+}
+
+.nebula-ticker-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nebula-coin-fullname {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text-pure);
+}
+
+.nebula-coin-ticker-code {
+    color: var(--text-slate);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.nebula-row-right-values {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 2px;
+}
+
+.nebula-crypto-holdings {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.nebula-fiat-valuation {
+    color: var(--text-slate);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ИНТЕРФЕЙСНЫЕ КАРТОЧКИ P2P РЫНКА */
+.nebula-p2p-navigation-header {
+    margin-bottom: 4px;
+}
+
+.nebula-p2p-title-block h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.nebula-p2p-title-block p {
+    font-size: 12px;
+    color: var(--text-slate);
+}
+
+.nebula-p2p-toggle-bar {
+    display: flex;
+    background: var(--nebula-card);
+    padding: 4px;
+    border-radius: 14px;
+    border: 1px solid var(--border-grid);
+}
+
+.nebula-p2p-toggle-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-slate);
+    padding: 10px 0;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--ui-transition);
+}
+
+.nebula-p2p-toggle-btn.active {
+    background: var(--space-void);
+    color: var(--neon-cyan);
+    border: 1px solid var(--border-grid);
+}
+
+.nebula-p2p-toggle-btn.active-sell {
+    background: var(--space-void);
+    color: var(--neon-rose);
+    border: 1px solid var(--border-grid);
+}
+
+.nebula-p2p-filters-row {
+    display: flex;
+    gap: 12px;
+}
+
+.nebula-filter-select {
+    font-size: 12px;
+    color: var(--text-slate);
+    background: var(--nebula-card);
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border-grid);
+}
+
+.nebula-filter-select strong {
+    color: var(--text-pure);
+}
+
+.nebula-p2p-orderbook-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nebula-p2p-deal-sheet {
+    background: var(--nebula-card);
+    border: 1px solid var(--border-grid);
+    padding: 16px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nebula-deal-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nebula-merchant-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-pure);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nebula-merchant-stat {
+    font-size: 10px;
+    background: rgba(118, 118, 147, 0.15);
+    color: var(--text-slate);
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
+.nebula-deal-limits-label {
+    font-size: 12px;
+    color: var(--text-slate);
+}
+
+.nebula-deal-exchange-rate {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--neon-cyan);
+    margin-top: 4px;
+}
+
+.nebula-deal-exchange-rate.sell-color {
+    color: var(--neon-rose);
+}
+
+.nebula-deal-action-execute-btn {
+    background: var(--neon-cyan);
+    border: none;
+    color: var(--space-void);
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--ui-transition);
+}
+
+.nebula-deal-action-execute-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 12px var(--neon-cyan-glow);
+}
+
+.nebula-deal-action-execute-btn.sell-btn-style {
+    background: var(--neon-rose);
+    color: var(--text-pure);
+}
+
+/* ЭЛЕМЕНТЫ ЖУРНАЛА ИСТОРИИ ОПЕРАЦИЙ */
+.nebula-history-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nebula-text-action-btn {
+    background: none;
+    border: none;
+    color: var(--neon-rose);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.nebula-history-item-row {
+    background: var(--nebula-card);
+    border: 1px solid var(--border-grid);
+    padding: 14px 16px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nebula-history-type-badge {
+    font-size: 14px;
+    width: 34px;
+    height: 34px;
+    background: var(--space-void);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--border-grid);
+}
+
+.nebula-history-meta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nebula-history-operation-title {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.nebula-history-timestamp {
+    font-size: 11px;
+    color: var(--text-slate);
+}
+
+.nebula-history-amounts {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nebula-history-crypto-val {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.nebula-history-crypto-val.plus { color: var(--neon-cyan); }
+.nebula-history-crypto-val.minus { color: var(--text-pure); }
+
+.nebula-history-status-txt {
+    font-size: 11px;
+    color: var(--neon-cyan);
+    font-weight: 500;
+}
+
+/* СТЕК СЕКЦИИ НАСТРОЕК */
+.nebula-settings-vertical-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nebula-settings-item {
+    background: var(--nebula-card);
+    border: 1px solid var(--border-grid);
+    padding: 16px 20px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nebula-setting-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 75%;
+}
+
+.nebula-setting-title {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.nebula-setting-desc {
+    font-size: 11px;
+    color: var(--text-slate);
+}
+
+/* ПЕРЕКЛЮЧАТЕЛИ (TOGGLES) */
+.nebula-toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    display: inline-block;
+}
+
+.nebula-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.nebula-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--space-void);
+    border: 1px solid var(--border-grid);
+    border-radius: 24px;
+    transition: var(--ui-transition);
+}
+
+.nebula-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--text-slate);
+    border-radius: 50%;
+    transition: var(--ui-transition);
+}
+
+.nebula-toggle-switch input:checked + .nebula-toggle-slider {
+    background-color: rgba(0, 255, 204, 0.1);
+    border-color: var(--neon-cyan);
+}
+
+.nebula-toggle-switch input:checked + .nebula-toggle-slider:before {
+    transform: translateX(20px);
+    background-color: var(--neon-cyan);
+    box-shadow: 0 0 8px var(--neon-cyan);
+}
+
+.nebula-settings-card-info {
+    background: rgba(29, 29, 47, 0.2);
+    border: 1px dashed var(--border-grid);
+    border-radius: 16px;
+    padding: 14px;
+    font-size: 11px;
+    color: var(--text-slate);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nebula-settings-card-info strong {
+    color: var(--text-pure);
+}
+
+/* НИЖНИЙ ДОК-БАР НАВИГАЦИИ */
+.nebula-dock-navigation-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(4,4,7,1) 0%, rgba(4,4,7,0.92) 100%);
+    border-top: 1px solid var(--border-grid);
+    padding: 12px 10px 24px 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    z-index: 100;
+}
+
+@media (min-width: 480px) {
+    .nebula-dock-navigation-bar {
+        padding-bottom: 14px;
+    }
+}
+
+.nebula-dock-tab {
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-slate);
+    cursor: pointer;
+    transition: var(--ui-transition);
+}
+
+.nebula-dock-tab:hover {
+    color: var(--text-pure);
+}
+
+.nebula-dock-tab.active {
+    color: var(--neon-cyan);
+}
+
+.nebula-dock-icon {
+    font-size: 18px;
+}
+
+.nebula-dock-text {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* МОДАЛЬНЫЕ ОКНА И ОВЕРЛЕИ */
+.nebula-global-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(2, 2, 4, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 2000;
+}
+
+.nebula-global-modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.nebula-modal-window-body {
+    background: #08080F;
+    width: 100%;
+    max-width: 460px;
+    border-radius: 28px 28px 0 0;
+    border-top: 1px solid var(--border-grid);
+    padding: 24px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.4, 1);
+}
+
+.nebula-global-modal-overlay.active .nebula-modal-window-body {
+    transform: translateY(0);
+}
+
+.nebula-modal-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-grid);
+    padding-bottom: 12px;
+}
+
+.nebula-modal-header-row h3 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.nebula-modal-close-x {
+    background: var(--nebula-card);
+    border: 1px solid var(--border-grid);
+    color: var(--text-pure);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nebula-modal-close-x:hover {
+    border-color: var(--neon-rose);
+    color: var(--neon-rose);
+}
+
+.nebula-modal-content-inject {
+    font-size: 14px;
+    color: #D1D1E0;
+    line-height: 1.5;
+}
