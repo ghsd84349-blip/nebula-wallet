@@ -1,1 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nebula Wallet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <div id="app">
+        
+        <section id="screen-wallet" class="app-screen">
+            <header class="app-header">
+                <div class="brand">
+                    <i class="fa-solid fa-user-astronaut neon-icon"></i>
+                    <span id="user-greeting">Привет, Cosmonaut</span>
+                </div>
+                <div class="logo">NEBULA</div>
+            </header>
+
+            <div class="balance-card">
+                <p class="balance-label">Общий баланс</p>
+                <h1 class="balance-amount">$1,540.20</h1>
+                <p class="balance-change"><i class="fa-solid fa-arrow-trend-up"></i> +4.23% за сегодня</p>
+            </div>
+
+            <div class="actions-panel">
+                <button class="action-btn" id="btn-receive">
+                    <div class="icon-wrapper"><i class="fa-solid fa-arrow-down"></i></div>
+                    <span>Получить</span>
+                </button>
+                <button class="action-btn" id="btn-send">
+                    <div class="icon-wrapper"><i class="fa-solid fa-arrow-up"></i></div>
+                    <span>Отправить</span>
+                </button>
+                <button class="action-btn" id="btn-exchange">
+                    <div class="icon-wrapper"><i class="fa-solid fa-right-left"></i></div>
+                    <span>Обменять</span>
+                </button>
+                <button class="action-btn" id="btn-market">
+                    <div class="icon-wrapper"><i class="fa-solid fa-chart-simple"></i></div>
+                    <span>Маркет</span>
+                </button>
+            </div>
+
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="crypto-search" placeholder="Поиск монет (название или тикер)..." autocomplete="off">
+            </div>
+
+            <div class="crypto-list" id="crypto-list-container">
+                </div>
+        </section>
+
+        <section id="screen-cards" class="app-screen hidden">
+            <h2 class="screen-title">Ваша карта Nebula</h2>
+            
+            <div id="card-order-block" class="glass-panel text-center">
+                <div class="card-promo-icon">
+                    <i class="fa-solid fa-credit-card neon-text"></i>
+                </div>
+                <h3>Nebula Virtual Visa</h3>
+                <p class="promo-text">Оплачивайте любые мировые сервисы и покупки прямо с криптокошелька без конвертации в фиат.</p>
+                <ul class="promo-features">
+                    <li><i class="fa-solid fa-circle-check"></i> Моментальный выпуск</li>
+                    <li><i class="fa-solid fa-circle-check"></i> 0% за обслуживание</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Прямая привязка к балансу</li>
+                </ul>
+                <button id="btn-issue-card" class="primary-btn">Выпустить виртуальную карту</button>
+            </div>
+
+            <div id="digital-card-wrapper" class="hidden">
+                <div class="nebula-card">
+                    <div class="card-row">
+                        <span class="card-brand">NEBULA</span>
+                        <i class="fa-brands fa-cc-visa card-system-logo"></i>
+                    </div>
+                    <div class="card-chip-row">
+                        <div class="card-chip"></div>
+                        <i class="fa-solid fa-wifi card-contactless"></i>
+                    </div>
+                    <div class="card-number" id="display-card-number">•••• •••• •••• ••••</div>
+                    <div class="card-row card-meta">
+                        <div class="meta-block">
+                            <span class="meta-label">CARDHOLDER</span>
+                            <span class="meta-value" id="display-card-holder">COSMONAUT</span>
+                        </div>
+                        <div class="meta-block">
+                            <span class="meta-label">EXPIRES</span>
+                            <span class="meta-value" id="display-card-expiry">••/••</span>
+                        </div>
+                        <div class="meta-block">
+                            <span class="meta-label">CVV</span>
+                            <span class="meta-value" id="display-card-cvv">•••</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-status-info">
+                    <i class="fa-solid fa-shield-halved text-success"></i> Карта активна и привязана к балансу USDT
+                </div>
+            </div>
+        </section>
+
+        <section id="screen-settings" class="app-screen hidden">
+            <h2 class="screen-title">Настройки</h2>
+            
+            <div class="profile-panel glass-panel">
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="profile-info">
+                    <h3 id="settings-user-name">Cosmonaut</h3>
+                    <p class="profile-status"><span class="badge-premium">Verified Account</span></p>
+                </div>
+            </div>
+
+            <div class="settings-list">
+                <div class="settings-item glass-panel">
+                    <div class="settings-left">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Уведомления о сделках</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="settings-item glass-panel">
+                    <div class="settings-left">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Биометрия / 2FA</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="settings-item glass-panel">
+                    <div class="settings-left">
+                        <i class="fa-solid fa-circle-nodes"></i>
+                        <span>Основная сеть (Mainnet)</span>
+                    </div>
+                    <span class="settings-value neon-text">TON Network</span>
+                </div>
+                
+                <div class="settings-item glass-panel">
+                    <div class="settings-left">
+                        <i class="fa-solid fa-circle-question"></i>
+                        <span>Поддержка пользователей</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right arrow-icon"></i>
+                </div>
+            </div>
+            <p class="app-version">Nebula Wallet v1.0.0 (Beta)</p>
+        </section>
+
+        <nav class="bottom-nav">
+            <button class="nav-tab active" data-screen="screen-wallet">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Кошелек</span>
+            </button>
+            <button class="nav-tab" data-screen="screen-cards">
+                <i class="fa-solid fa-credit-card"></i>
+                <span>Карта</span>
+            </button>
+            <button class="nav-tab" data-screen="screen-settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Настройки</span>
+            </button>
+        </nav>
+
+        <div id="custom-modal" class="modal-overlay hidden">
+            <div class="modal-content glass-panel">
+                <div class="modal-header">
+                    <h3 id="modal-title">Операция</h3>
+                    <button id="modal-close-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body" id="modal-body-content">
+                    </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
