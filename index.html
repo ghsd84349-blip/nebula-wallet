@@ -2,83 +2,91 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nebula Space Wallet</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <div class="app-container">
-        <header class="top-nav">
-            <div class="profile-section">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <span class="greeting">Добро пожаловать,</span>
-                    <span class="wallet-address">0x...Nebula</span>
+        <header class="top-bar">
+            <div class="profile">
+                <div class="avatar">🛸</div>
+                <div class="profile-text">
+                    <span class="wallet-label">Nebula Core Wallet</span>
+                    <span class="wallet-id">0x71C...8949</span>
                 </div>
             </div>
-            <div class="top-actions">
-                <button class="icon-btn" id="installBtn" style="display:none;">💻</button>
-                <button class="icon-btn">⚙️</button>
-            </div>
+            <button id="installBtn" class="install-pc-btn" style="display: none;">Установить на ПК</button>
         </header>
 
-        <section class="balance-section">
-            <p class="balance-label">Общий баланс</p>
-            <h1 class="total-balance">$0.00</h1>
-            <div class="balance-changes positive">
-                <span>+0.00% (24ч)</span>
+        <section class="balance-card">
+            <p class="balance-title">Общий баланс</p>
+            <h1 id="total-balance">$0.00</h1>
+            <div class="balance-badge">
+                <span class="badge-trend">↗ 0.00% (24ч)</span>
             </div>
         </section>
 
-        <section class="action-buttons">
-            <button class="action-btn">
-                <div class="btn-icon">⬆️</div>
-                <span>Отправить</span>
+        <section class="action-grid">
+            <button class="action-card">
+                <span class="action-icon">📥</span>
+                <span class="action-text">Получить</span>
             </button>
-            <button class="action-btn">
-                <div class="btn-icon">⬇️</div>
-                <span>Получить</span>
+            <button class="action-card">
+                <span class="action-icon">📤</span>
+                <span class="action-text">Отправить</span>
             </button>
-            <button class="action-btn" id="open-p2p">
-                <div class="btn-icon">🔄</div>
-                <span>P2P</span>
+            <button class="action-card" id="p2p-trigger">
+                <span class="action-icon">🔄</span>
+                <span class="action-text">P2P Торговля</span>
             </button>
-            <button class="action-btn">
-                <div class="btn-icon">💱</div>
-                <span>Обмен</span>
+            <button class="action-card">
+                <span class="action-icon">💱</span>
+                <span class="action-text">Обмен</span>
             </button>
         </section>
 
-        <section class="search-section">
-            <div class="search-box">
-                <span>🔍</span>
-                <input type="text" id="crypto-search" placeholder="Поиск криптовалюты...">
+        <section class="search-container">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="coin-search" placeholder="Поиск криптовалюты по названию...">
             </div>
         </section>
 
-        <section class="assets-section">
-            <div class="section-header">
-                <h2>Ваши активы</h2>
-            </div>
-            <div class="assets-list" id="assets-container">
+        <section class="assets-wrapper">
+            <h3 class="section-title">Ваши активы</h3>
+            <div id="assets-list" class="assets-list">
                 </div>
         </section>
 
-        <div class="modal-overlay" id="p2p-modal">
-            <div class="modal-content">
+        <div id="p2p-modal" class="modal-overlay">
+            <div class="modal-window">
                 <div class="modal-header">
-                    <h2>Nebula P2P Торговля</h2>
-                    <button class="close-btn" id="close-p2p">✖</button>
+                    <h2>Nebula P2P Платформа</h2>
+                    <button id="close-modal" class="close-modal-btn">✕</button>
                 </div>
-                <div class="modal-body">
-                    <p>Рынок открыт. Здесь вы можете покупать и продавать криптовалюту напрямую.</p>
-                    <button class="primary-btn" style="margin-top: 20px;">Создать ордер</button>
+                <div class="modal-tabs">
+                    <span class="tab active">Покупка</span>
+                    <span class="tab">Продажа</span>
+                </div>
+                <div class="p2p-orders">
+                    <div class="p2p-order-item">
+                        <div class="order-user">👤 CryptoBoss (99% ордеров)</div>
+                        <div class="order-limits">Лимиты: 500 – 50,000 RUB</div>
+                        <div class="order-price">94.50 RUB</div>
+                        <button class="order-buy-btn">Купить USDT</button>
+                    </div>
+                    <div class="p2p-order-item">
+                        <div class="order-user">👤 Saturn_Exchange (95% ордеров)</div>
+                        <div class="order-limits">Лимиты: 1,000 – 150,000 RUB</div>
+                        <div class="order-price">94.65 RUB</div>
+                        <button class="order-buy-btn">Купить USDT</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
