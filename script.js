@@ -1,83 +1,80 @@
-// База данных активов (изначально всё по нулям)
+// База токенов (Изначально строго по нулям)
 const cryptoAssets = [
-    { name: "Bitcoin", ticker: "BTC", icon: "₿", balance: 0.00, price: 65000 },
-    { name: "Ethereum", ticker: "ETH", icon: "Ξ", balance: 0.00, price: 3500 },
-    { name: "Tether", ticker: "USDT", icon: "₮", balance: 0.00, price: 1.00 },
-    { name: "Solana", ticker: "SOL", icon: "S", balance: 0.00, price: 140 },
-    { name: "Binance Coin", ticker: "BNB", icon: "B", balance: 0.00, price: 580 },
-    { name: "Ripple", ticker: "XRP", icon: "✕", balance: 0.00, price: 0.60 }
+    { name: "Bitcoin", code: "BTC", logo: "₿", balance: 0.00, price: 65000 },
+    { name: "Ethereum", code: "ETH", logo: "Ξ", balance: 0.00, price: 3500 },
+    { name: "Tether", code: "USDT", logo: "₮", balance: 0.00, price: 1.00 },
+    { name: "Solana", code: "SOL", logo: "S", balance: 0.00, price: 140 },
+    { name: "Binance Coin", code: "BNB", logo: "B", balance: 0.00, price: 580 },
+    { name: "Ripple", code: "XRP", logo: "✕", balance: 0.00, price: 0.60 }
 ];
 
-const assetsContainer = document.getElementById('assets-container');
-const searchInput = document.getElementById('crypto-search');
+const assetsList = document.getElementById('assets-list');
+const coinSearch = document.getElementById('coin-search');
 
-// Функция отрисовки списка монет
-function renderAssets(filterText = "") {
-    // Очищаем контейнер перед обновлением
-    assetsContainer.innerHTML = '';
-
-    // Фильтруем монеты по названию или тикеру
-    const filteredAssets = cryptoAssets.filter(asset => 
-        asset.name.toLowerCase().includes(filterText.toLowerCase()) || 
-        asset.ticker.toLowerCase().includes(filterText.toLowerCase())
+// Функция вывода токенов с фильтрацией
+function renderCoins(filter = "") {
+    assetsList.innerHTML = "";
+    
+    const filtered = cryptoAssets.filter(c => 
+        c.name.toLowerCase().includes(filter.toLowerCase()) || 
+        c.code.toLowerCase().includes(filter.toLowerCase())
     );
 
-    // Создаем карточки
-    filteredAssets.forEach(asset => {
-        const fiatValue = (asset.balance * asset.price).toFixed(2);
-        
-        const assetHTML = `
-            <div class="asset-item">
-                <div class="asset-info">
-                    <div class="asset-icon">${asset.icon}</div>
-                    <div>
-                        <span class="asset-name">${asset.name}</span>
-                        <span class="asset-ticker">${asset.ticker}</span>
+    filtered.forEach(c => {
+        const fiat = (c.balance * c.price).toFixed(2);
+        const row = `
+            <div class="asset-row">
+                <div class="asset-main">
+                    <div class="asset-logo">${c.logo}</div>
+                    <div class="asset-details">
+                        <span class="asset-name">${c.name}</span>
+                        <span class="asset-code">${c.code}</span>
                     </div>
                 </div>
-                <div class="asset-balance-info">
-                    <span class="asset-amount">${asset.balance.toFixed(2)} ${asset.ticker}</span>
-                    <span class="asset-fiat">$${fiatValue}</span>
+                <div class="asset-vals">
+                    <span class="asset-bal">${c.balance.toFixed(2)} ${c.code}</span>
+                    <span class="asset-fiat">$${fiat}</span>
                 </div>
             </div>
         `;
-        assetsContainer.insertAdjacentHTML('beforeend', assetHTML);
+        assetsList.insertAdjacentHTML('beforeend', row);
     });
 }
 
-// Слушатель для поля поиска
-searchInput.addEventListener('input', (e) => {
-    renderAssets(e.target.value);
+// Слушатель ввода для поиска
+coinSearch.addEventListener('input', (e) => {
+    renderCoins(e.target.value);
 });
 
-// Логика работы модального окна P2P
+// Управление модальным окном P2P
 const p2pModal = document.getElementById('p2p-modal');
-const openP2pBtn = document.getElementById('open-p2p');
-const closeP2pBtn = document.getElementById('close-p2p');
+const p2pTrigger = document.getElementById('p2p-trigger');
+const closeModal = document.getElementById('close-modal');
 
-openP2pBtn.addEventListener('click', () => {
+p2pTrigger.addEventListener('click', () => {
     p2pModal.classList.add('active');
 });
 
-closeP2pBtn.addEventListener('click', () => {
+closeModal.addEventListener('click', () => {
     p2pModal.classList.remove('active');
 });
 
-// Закрытие P2P окна при клике вне его области
 p2pModal.addEventListener('click', (e) => {
+    if(e.target === p2pModal) p2pModal.classList.remove('remove');
+    // Закрытие при клике по фону
     if (e.target === p2pModal) {
         p2pModal.classList.remove('active');
     }
 });
 
-// Установка приложения (PWA)
+// Кнопка принудительной установки PWA на ПК
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    installBtn.style.display = 'block';
+    installBtn.style.display = 'inline-block';
 });
 
 installBtn.addEventListener('click', () => {
@@ -88,5 +85,5 @@ installBtn.addEventListener('click', () => {
     }
 });
 
-// Первоначальная отрисовка
-renderAssets();
+// Инициализация первой сборки интерфейса
+renderCoins();
