@@ -2,88 +2,191 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nebula Space Wallet</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <div class="app-container">
-        <header class="top-bar">
-            <div class="profile">
-                <div class="avatar">🛸</div>
-                <div class="profile-text">
-                    <span class="wallet-label">Nebula Core Wallet</span>
-                    <span class="wallet-id">0x71C...8949</span>
+    <div class="nebula-app-frame">
+        <header class="nebula-core-header">
+            <div class="nebula-profile-identity">
+                <div class="nebula-avatar-glow">
+                    <span class="nebula-avatar-icon">🛸</span>
+                    <div class="nebula-pulse-ring"></div>
+                </div>
+                <div class="nebula-identity-meta">
+                    <span class="nebula-user-rank">Premium Node</span>
+                    <div class="nebula-wallet-hash-box">
+                        <span id="wallet-address-field">0x71C84349...b1ip</span>
+                        <button class="nebula-copy-btn" id="copy-address-trigger" title="Копировать адрес">📋</button>
+                    </div>
                 </div>
             </div>
-            <button id="installBtn" class="install-pc-btn" style="display: none;">Установить на ПК</button>
+            <div class="nebula-system-badges">
+                <button id="pwa-install-hardware-btn" class="nebula-hardware-btn">Установить на ПК</button>
+                <div class="nebula-network-status">
+                    <span class="nebula-status-dot"></span>
+                    <span class="nebula-status-text">Mainnet</span>
+                </div>
+            </div>
         </header>
 
-        <section class="balance-card">
-            <p class="balance-title">Общий баланс</p>
-            <h1 id="total-balance">$0.00</h1>
-            <div class="balance-badge">
-                <span class="badge-trend">↗ 0.00% (24ч)</span>
+        <section class="nebula-balance-viewport" id="viewport-balance-card">
+            <div class="nebula-card-mesh-bg"></div>
+            <span class="nebula-viewport-caption">Оценочная стоимость активов</span>
+            <h1 class="nebula-crypto-massive-display" id="main-portfolio-fiat-balance">$0.00</h1>
+            <div class="nebula-analytics-row">
+                <div class="nebula-analytics-pill">
+                    <span class="nebula-trend-arrow">→</span>
+                    <span class="nebula-trend-percentage">0.00% (24ч)</span>
+                </div>
+                <div class="nebula-currency-selector">
+                    <span class="nebula-currency-tab active">USD</span>
+                    <span class="nebula-currency-tab">RUB</span>
+                </div>
             </div>
         </section>
 
-        <section class="action-grid">
-            <button class="action-card">
-                <span class="action-icon">📥</span>
-                <span class="action-text">Получить</span>
+        <section class="nebula-actions-matrix">
+            <button class="nebula-matrix-tile" id="action-send-trigger">
+                <div class="nebula-tile-graphic">⬆️</div>
+                <span class="nebula-tile-title">Отправить</span>
             </button>
-            <button class="action-card">
-                <span class="action-icon">📤</span>
-                <span class="action-text">Отправить</span>
+            <button class="nebula-matrix-tile" id="action-receive-trigger">
+                <div class="nebula-tile-graphic">📥</div>
+                <span class="nebula-tile-title">Получить</span>
             </button>
-            <button class="action-card" id="p2p-trigger">
-                <span class="action-icon">🔄</span>
-                <span class="action-text">P2P Торговля</span>
+            <button class="nebula-matrix-tile interactive-glow" id="action-p2p-tab-trigger">
+                <div class="nebula-tile-graphic">🔄</div>
+                <span class="nebula-tile-title">P2P Обмен</span>
             </button>
-            <button class="action-card">
-                <span class="action-icon">💱</span>
-                <span class="action-text">Обмен</span>
+            <button class="nebula-matrix-tile" id="action-swap-trigger">
+                <div class="nebula-tile-graphic">💱</div>
+                <span class="nebula-tile-title">Своп</span>
             </button>
         </section>
 
-        <section class="search-container">
-            <div class="search-wrapper">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="coin-search" placeholder="Поиск криптовалюты по названию...">
+        <main class="nebula-main-content-area">
+            
+            <div class="nebula-tab-page active" id="tab-page-assets">
+                <div class="nebula-search-system-box">
+                    <div class="nebula-search-input-wrapper">
+                        <span class="nebula-search-icon-decorator">🔍</span>
+                        <input type="text" id="nebula-crypto-live-search" placeholder="Поиск токена по названию или тикеру...">
+                        <button class="nebula-search-clear-btn" id="nebula-search-clear-trigger">✕</button>
+                    </div>
+                </div>
+
+                <div class="nebula-list-section-header">
+                    <h3>Криптовалютные активы</h3>
+                    <span class="nebula-counter-badge" id="ledger-items-counter">0 монет</span>
+                </div>
+
+                <div class="nebula-ledger-scroll-container" id="ledger-mount-point">
+                    </div>
             </div>
-        </section>
 
-        <section class="assets-wrapper">
-            <h3 class="section-title">Ваши активы</h3>
-            <div id="assets-list" class="assets-list">
-                </div>
-        </section>
-
-        <div id="p2p-modal" class="modal-overlay">
-            <div class="modal-window">
-                <div class="modal-header">
-                    <h2>Nebula P2P Платформа</h2>
-                    <button id="close-modal" class="close-modal-btn">✕</button>
-                </div>
-                <div class="modal-tabs">
-                    <span class="tab active">Покупка</span>
-                    <span class="tab">Продажа</span>
-                </div>
-                <div class="p2p-orders">
-                    <div class="p2p-order-item">
-                        <div class="order-user">👤 CryptoBoss (99% ордеров)</div>
-                        <div class="order-limits">Лимиты: 500 – 50,000 RUB</div>
-                        <div class="order-price">94.50 RUB</div>
-                        <button class="order-buy-btn">Купить USDT</button>
-                    </div>
-                    <div class="p2p-order-item">
-                        <div class="order-user">👤 Saturn_Exchange (95% ордеров)</div>
-                        <div class="order-limits">Лимиты: 1,000 – 150,000 RUB</div>
-                        <div class="order-price">94.65 RUB</div>
-                        <button class="order-buy-btn">Купить USDT</button>
+            <div class="nebula-tab-page" id="tab-page-p2p">
+                <div class="nebula-p2p-navigation-header">
+                    <div class="nebula-p2p-title-block">
+                        <h3>Nebula P2P Marketplace</h3>
+                        <p>Прямые сделки между пользователями без посредников</p>
                     </div>
                 </div>
+
+                <div class="nebula-p2p-toggle-bar">
+                    <button class="nebula-p2p-toggle-btn active" id="p2p-mode-buy-btn">Хочу купить</button>
+                    <button class="nebula-p2p-toggle-btn" id="p2p-mode-sell-btn">Хочу продать</button>
+                </div>
+
+                <div class="nebula-p2p-filters-row">
+                    <div class="nebula-filter-select">Валюта: <strong>RUB</strong></div>
+                    <div class="nebula-filter-select">Оплата: <strong>Все банки</strong></div>
+                </div>
+
+                <div class="nebula-p2p-orderbook-list" id="p2p-orderbook-mount-point">
+                    </div>
+            </div>
+
+            <div class="nebula-tab-page" id="tab-page-history">
+                <div class="nebula-list-section-header">
+                    <h3>Журнал транзакций</h3>
+                    <button class="nebula-text-action-btn" id="clear-history-log-btn">Очистить</button>
+                </div>
+                <div class="nebula-history-timeline" id="history-log-mount-point">
+                    </div>
+            </div>
+
+            <div class="nebula-tab-page" id="tab-page-settings">
+                <div class="nebula-list-section-header">
+                    <h3>Конфигурация кошелька</h3>
+                </div>
+                <div class="nebula-settings-vertical-stack">
+                    <div class="nebula-settings-item">
+                        <div class="nebula-setting-meta">
+                            <span class="nebula-setting-title">Защита биометрией</span>
+                            <span class="nebula-setting-desc">Запрашивать FaceID / TouchID при входе</span>
+                        </div>
+                        <label class="nebula-toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="nebula-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="nebula-settings-item">
+                        <div class="nebula-setting-meta">
+                            <span class="nebula-setting-title">Уведомления сети</span>
+                            <span class="nebula-setting-desc">Push-оповещения о входящих транзакциях</span>
+                        </div>
+                        <label class="nebula-toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="nebula-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="nebula-settings-item">
+                        <div class="nebula-setting-meta">
+                            <span class="nebula-setting-title">Режим разработчика</span>
+                            <span class="nebula-setting-desc">Отображение логов системной консоли</span>
+                        </div>
+                        <label class="nebula-toggle-switch">
+                            <input type="checkbox" id="dev-mode-toggle">
+                            <span class="nebula-toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="nebula-settings-card-info">
+                        <p>Версия ядра: <strong>Nebula Core v4.12.0-beta</strong></p>
+                        <p>Статус шифрования: <strong>AES-256-GCM Secured</strong></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="nebula-dock-navigation-bar">
+            <button class="nebula-dock-tab active" id="dock-btn-assets">
+                <span class="nebula-dock-icon">💼</span>
+                <span class="nebula-dock-text">Активы</span>
+            </button>
+            <button class="nebula-dock-tab" id="dock-btn-p2p">
+                <span class="nebula-dock-icon">🔄</span>
+                <span class="nebula-dock-text">P2P</span>
+            </button>
+            <button class="nebula-dock-tab" id="dock-btn-history">
+                <span class="nebula-dock-icon">📜</span>
+                <span class="nebula-dock-text">История</span>
+            </button>
+            <button class="nebula-dock-tab" id="dock-btn-settings">
+                <span class="nebula-dock-icon">⚙️</span>
+                <span class="nebula-dock-text">Опции</span>
+            </button>
+        </nav>
+
+        <div class="nebula-global-modal-overlay" id="global-system-modal">
+            <div class="nebula-modal-window-body">
+                <div class="nebula-modal-header-row">
+                    <h3 id="modal-title-field">Панель операции</h3>
+                    <button class="nebula-modal-close-x" id="global-modal-close-btn">✕</button>
+                </div>
+                <div class="nebula-modal-content-inject" id="modal-content-field">
+                    </div>
             </div>
         </div>
     </div>
